@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using RestTest.Core.Dto.UseCaseRequests;
+using RestTest.Core.Dto.UseCaseResponses;
 using RestTest.Core.Interfaces.UseCases;
 
 namespace RestTest.Core.UseCases

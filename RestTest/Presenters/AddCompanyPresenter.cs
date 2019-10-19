@@ -5,7 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using RestTest.Core.Dto.UseCaseResponses;
 using System.Net;
-using Web.Api.Serialization;
+using RestTest.Api.Serialization;
+using RestTest.Api.Serialization;
 
 namespace RestTest.Api.Presenters
 {
@@ -21,7 +22,7 @@ namespace RestTest.Api.Presenters
         public void Handle(AddCompanyResponse response)
         {
             ContentResult.StatusCode = (int)(response.Success ? HttpStatusCode.OK : HttpStatusCode.BadRequest);
-            ContentResult.Content = response.Success ? JsonSerializer.SerializeObject(response.Id)
+            ContentResult.Content = response.Success ? JsonSerializer.SerializeObject(response.Id) : JsonSerializer.SerializeObject(response.Errors);
         }
     }
 }

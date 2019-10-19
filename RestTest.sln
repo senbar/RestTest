@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29411.108
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestTest.Api", "RestTest\RestTest.Api.csproj", "{A08FBE9A-6467-46E9-8BBE-7BEC8CBE3CB0}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestTest.Infrastructure.Uni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestTest.Infrastructure", "RestTest.Infrastructure\RestTest.Infrastructure.csproj", "{F9B48047-EB55-47E3-BB5A-FDC6F3C0BB68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestTest.Core", "RestTest.Core\RestTest.Core.csproj", "{60D798F7-B22C-4910-99CC-D7BADD69C309}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestTest.Core", "RestTest.Core\RestTest.Core.csproj", "{60D798F7-B22C-4910-99CC-D7BADD69C309}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
