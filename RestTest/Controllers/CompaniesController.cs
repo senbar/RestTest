@@ -9,7 +9,7 @@ using RestTest.Core.Dto.UseCaseRequests;
 
 namespace RestTest.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/company")]
     [ApiController]
     public class CompaniesController
     {
@@ -23,6 +23,7 @@ namespace RestTest.Api.Controllers
         }
 
         [HttpPost]
+        [Route("create")]
         public async Task<ActionResult> Post([FromBody] Models.Request.AddCompanyRequest addCompanyRequest)
         {
             await _addCompanyUseCase.Handle(new Core.Dto.UseCaseRequests.AddCompanyRequest(addCompanyRequest.test, 1, null), _addCompanyPresenter);

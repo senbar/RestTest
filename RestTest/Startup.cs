@@ -15,6 +15,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Autofac;
 using System.Reflection;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 
 namespace RestTest
 {
@@ -28,33 +29,28 @@ namespace RestTest
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(RestTest.Infrastructure.Data.Mapping.DataProfiles));
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "RestTestApi" });
+                c.SwaggerDoc("v1", new  OpenApiInfo { Title = "RestTestApi" });
             });
 
             services.AddControllers();
 
-            //dependency injection with autofac
-            var builder = new ContainerBuilder();
+        }
 
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
             //TODO
             //builder.RegisterModule(new CoreModule());
             //builder.RegisterModule(new InfrastructureModule());
 
             //preseneters reflection registering automatically
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Presenter")).SingleInstance();
-
-            builder.Populate(services);
-            var container = builder.Build();
-
-            return new AutofacServiceProvider(container);
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
