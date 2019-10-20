@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using RestTest.Core.Dto.UseCaseResponses;
 using System.Net;
 using RestTest.Api.Serialization;
-using RestTest.Api.Serialization;
 
 namespace RestTest.Api.Presenters
 {
