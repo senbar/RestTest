@@ -1,13 +1,15 @@
 ﻿using Autofac;
+using RestTest.Core.Interfaces.Gateways.Repositories;
+using RestTest.Infrastructure.Data.NHibernateFramework.Repositories;
 
 namespace RestTest.Infrastructure
 {
-    class InfrastructureModule : Module
+    public class InfrastructureModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
             //TODO
-            //builder.RegisterType
+            builder.RegisterType<CompanyRepository>().As<ICompanyRepository>();
         }
     }
 }

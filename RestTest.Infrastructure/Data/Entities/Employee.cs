@@ -9,10 +9,10 @@ namespace RestTest.Infrastructure.Data.Entities
 {
     public class Employee
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public virtual string FirstName { get; set; }
+        public virtual string LastName { get; set; }
+        public virtual DateTime DateOfBirth { get; set; }
 
-        public JobTitles JobTitle { get; set; }
+        public virtual int JobTitle { get; set; }
     }
 }

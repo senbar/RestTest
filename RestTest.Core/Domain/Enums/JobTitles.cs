@@ -2,9 +2,9 @@
 {
     public enum JobTitles
     {
-        Developer,
-        Architect,
-        Manager,
-        Administrator
+        Developer = 0,
+        Architect = 1,
+        Manager = 2,
+        Administrator = 3
     };
 }

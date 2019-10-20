@@ -4,7 +4,7 @@ using RestTest.Core.UseCases;
 
 namespace RestTest.Core
 {
-    class CoreModule : Module
+    public class CoreModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

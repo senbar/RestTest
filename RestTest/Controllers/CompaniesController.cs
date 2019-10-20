@@ -26,7 +26,8 @@ namespace RestTest.Api.Controllers
         [Route("create")]
         public async Task<ActionResult> Post([FromBody] Models.Request.AddCompanyRequest addCompanyRequest)
         {
-            await _addCompanyUseCase.Handle(new Core.Dto.UseCaseRequests.AddCompanyRequest(addCompanyRequest.test, 1, null), _addCompanyPresenter);
+            await _addCompanyUseCase.Handle(new Core.Dto.UseCaseRequests.AddCompanyRequest(addCompanyRequest.CompanyName, addCompanyRequest.YearEstablished,
+                addCompanyRequest.Employees), _addCompanyPresenter);
             return _addCompanyPresenter.ContentResult;
         }
     }

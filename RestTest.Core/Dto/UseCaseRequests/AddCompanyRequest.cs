@@ -9,9 +9,9 @@ namespace RestTest.Core.Dto.UseCaseRequests
     {
         public string CompanyName { get; }        
         public int YearEstablished { get; }
-        public IEnumerable<Employee> Employees { get; }
+        public IList<Employee> Employees { get; }
 
-        public AddCompanyRequest(string companyName, int yearEstablished, IEnumerable<Employee> employees)
+        public AddCompanyRequest(string companyName, int yearEstablished, IList<Employee> employees)
         {
             CompanyName = companyName;
             YearEstablished = yearEstablished;

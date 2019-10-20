@@ -1,4 +1,6 @@
 using System;
+using RestTest.Core;
+using RestTest.Infrastructure;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,8 +33,16 @@ namespace RestTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(RestTest.Infrastructure.Data.Mapping.DataProfiles));
+            //mapper config
+            var mapperConfig = new MapperConfiguration(mc =>
+             {
+                 mc.AddProfile(new Infrastructure.Data.Mapping.DataProfiles());
+                 
+             });
+            mapperConfig.CompileMappings();
+            services.AddSingleton(mapperConfig.CreateMapper());
 
+            //swagger config
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new  OpenApiInfo { Title = "RestTestApi" });
@@ -44,9 +54,8 @@ namespace RestTest
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            //TODO
-            //builder.RegisterModule(new CoreModule());
-            //builder.RegisterModule(new InfrastructureModule());
+            builder.RegisterModule(new CoreModule());
+            builder.RegisterModule(new InfrastructureModule());
 
             //preseneters reflection registering automatically
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Presenter")).SingleInstance();

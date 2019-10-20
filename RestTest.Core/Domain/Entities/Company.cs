@@ -7,14 +7,16 @@ namespace RestTest.Core.Domain.Entities
 {
     public class Company
     {
-        public string CompmanyName { get; }
+        public string CompanyName { get; }
         public int YearEstablished { get; }
 
         public IList<Employee> Employees { get; }
 
-        public Company()
+        public Company(string companyName, int yearEstablished, IList<Employee> employees)
         {
-            Employees = new List<Employee>();
+            CompanyName = companyName;
+            YearEstablished = yearEstablished;
+            Employees = employees;
         }
     }
 }
