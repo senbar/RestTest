@@ -9,6 +9,7 @@ namespace RestTest.Core
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<AddCompanyUseCase>().As<IAddCompanyUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<SearchCompanyUseCase>().As<ISearchCompanyUseCase>().InstancePerLifetimeScope();
         }
     }
 }

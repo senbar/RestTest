@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using RestTest.Core.Domain.Entities;
+using NHibernate.Mapping.ByCode;
 
 namespace RestTest.Infrastructure.Data.NHibernateFramework.Mapping
 {
@@ -11,10 +12,22 @@ namespace RestTest.Infrastructure.Data.NHibernateFramework.Mapping
         public CompanyMap()
         {
             Table("Company");
-            Id(x => x.CompanyName);
-            //Property(x => x.CompanyName);
+            Id(x => x.Id, m => m.Generator(Generators.Identity));
+            Property(x => x.CompanyName);
             Property(x => x.YearEstablished);
-            List(x => x.Employees, m => m.Table("Employee"), map => map.OneToMany(p => p.Class(typeof(Data.Entities.Employee))));
+            Set(x => x.Employees,
+            m =>
+            {
+                m.Table("Employee");
+                m.Inverse(true);
+                m.Cascade(Cascade.All);
+                m.Key(c => c.Column("CompanyId"));
+            },
+            map =>
+            {
+                map.OneToMany(p => p.Class(typeof(Data.Entities.Employee)));
+           });
+            
         }
     }
 }

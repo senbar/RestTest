@@ -7,9 +7,11 @@ namespace RestTest.Core.Domain.Entities
 {
     public class Employee
     {
-        public string FirstName { get; }
-        public string LastName { get; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
-        public JobTitles JobTitle { get; }
+        public JobTitles JobTitle { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
     }
 }

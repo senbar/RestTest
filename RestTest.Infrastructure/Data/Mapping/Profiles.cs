@@ -19,13 +19,14 @@ namespace RestTest.Infrastructure.Data.Mapping
 
         public DataProfiles()
         {
-            CreateMap<Entities.Employee, Core.Domain.Entities.Employee>()
-                .ForMember(dest => dest.JobTitle,
-                opt => opt.MapFrom(src => (JobTitles)src.JobTitle));
+            CreateMap<Core.Domain.Entities.Employee, Infrastructure.Data.Entities.Employee> ();
+            CreateMap<IList<Entities.Employee>, IList<Core.Domain.Entities.Employee>>();
+            //    .ForMember(dest => dest.JobTitle,
+             //   opt => opt.MapFrom(src => (JobTitles)src.JobTitle));
 
-            CreateMap<Entities.Employee, Core.Domain.Entities.Employee>()
-                .ForMember(dest => dest.JobTitle,
-                opt => opt.MapFrom(src => (int)src.JobTitle));
+           // CreateMap<IList<Entities.Employee>, IList<Core.Domain.Entities.Employee>>();
+               // .ForMember(dest => dest.,
+                //opt => opt.MapFrom(src => (int)src.JobTitle));
                 
             CreateMap<RestTest.Core.Domain.Entities.Company, Entities.Company>()
                .ForMember(dest => dest.Employees, opt => opt.MapFrom(src => src.Employees));

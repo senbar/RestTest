@@ -9,8 +9,17 @@ namespace RestTest.Infrastructure.Data.NHibernateFramework.Mapping
     {
         public EmployeeMap()
         {
+            Table("Employee");
+
+            Id(x => x.Id);
+            ManyToOne(x => x.Company, map =>
+             {
+                 map.Column("CompanyId");
+             });
+            
             Property(c => c.FirstName);
             Property(c => c.LastName);
+            Property(c => c.DateOfBirth);
             Property(c => c.JobTitle);
         }
     }

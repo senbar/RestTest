@@ -36,8 +36,8 @@ namespace RestTest
             //mapper config
             var mapperConfig = new MapperConfiguration(mc =>
              {
+                 mc.AddProfile(new Api.Models.Mapping.RequestsProfile());
                  mc.AddProfile(new Infrastructure.Data.Mapping.DataProfiles());
-                 
              });
             mapperConfig.CompileMappings();
             services.AddSingleton(mapperConfig.CreateMapper());

@@ -7,15 +7,15 @@ namespace RestTest.Infrastructure.Data.Entities
     //this model
     public class Company
     {
+        public virtual int Id { get; set; }
 
         public virtual string CompanyName { get; set; }
         public virtual int YearEstablished { get; set; }
 
-        public virtual IList<Employee> Employees { get; set; }
+        public virtual ISet<Employee> Employees { get; set; }
 
         public Company()
         {
-            Employees = new List<Employee>();
         }
     }
 }
