@@ -3,6 +3,7 @@ using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 using RestTest.Core.Domain.Entities;
+using RestTest.Core.Domain.Enums;
 using RestTest.Core.Dto.UseCaseRequests;
 using RestTest.Core.Dto.UseCaseResponses;
 using RestTest.Core.Interfaces.Gateways.Repositories;
@@ -41,25 +42,22 @@ namespace RestTest.Infrastructure.Data.NHibernateFramework.Repositories
             SearchCompanyResponse response;
             using (var tran = _session.BeginTransaction())
             {
-                var test = _session.Query<Company>().ToList();
-
-                var keywordResult = await (_session.Query<Company>().Where(x => 
+                var keywordResult = await (_session.Query<Infrastructure.Data.Entities.Company>().Where(x => 
                 x.Employees.Any(e => e.FirstName.Contains(searchRequest.Keyword)
                 || e.LastName.Contains(searchRequest.Keyword)) 
                 || x.CompanyName.Contains(searchRequest.Keyword))).ToListAsync();
 
-                var birthdayRangeResult = await (_session.Query<Company>().Where(x =>
+                var birthdayRangeResult = await (_session.Query<Entities.Company>().Where(x =>
                  x.Employees.Any(
                      e => e.DateOfBirth.Date > searchRequest.EmployeeDateOfBirthFrom.Date &&
                           e.DateOfBirth.Date < searchRequest.EmployeeDateOfBirthTo)))
                  .ToListAsync();
 
-                var titlesResult = await (_session.Query<Company>().Where(x =>
-                x.Employees.Any(e => searchRequest.EmployeeJobTitles.Contains(e.JobTitle)))).ToListAsync();
+                var titlesResult = await (_session.Query<Entities.Company>().Where(x =>
+                x.Employees.Any(e => searchRequest.EmployeeJobTitles.Contains((JobTitles)e.JobTitle)))).ToListAsync();
 
-                response = new SearchCompanyResponse(keywordResult.Concat(birthdayRangeResult).Concat(titlesResult).ToList(), true);
+                response = new SearchCompanyResponse(new List<string>(), true);
             }
-            
             return response;
         }
     }

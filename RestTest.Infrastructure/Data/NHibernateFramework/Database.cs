@@ -25,11 +25,14 @@ namespace RestTest.Infrastructure.Data.NHibernateFramework
                     mapper.AddMapping(typeof(CompanyMap));
                     mapper.AddMapping(typeof(EmployeeMap));
                     configuration.AddMapping(mapper.CompileMappingForAllExplicitlyAddedEntities());
+                    
                     configuration.DataBaseIntegration(c =>
                     {
                         c.Dialect<NHibernate.Dialect.SQLiteDialect>();
                         c.ConnectionString = "Data Source = TestDb.sqlite";
                         c.LogSqlInConsole = true;
+                        c.LogFormattedSql = true;
+                        
                     });
 
                     _sessionFactory = configuration.BuildSessionFactory();
