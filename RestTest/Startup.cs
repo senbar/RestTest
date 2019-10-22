@@ -22,6 +22,7 @@ using ZNetCS.AspNetCore.Authentication.Basic;
 using ZNetCS.AspNetCore.Authentication.Basic.Events;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using RestTest.Api.Middleware;
 
 namespace RestTest
 {
@@ -39,8 +40,8 @@ namespace RestTest
         {
             //basic auth config
             services
-        .AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
-        .AddBasicAuthentication(
+            .AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
+            .AddBasicAuthentication(
             options =>
             {
                 options.Realm = "RestTest";
@@ -103,7 +104,12 @@ namespace RestTest
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+
             app.UseAuthentication();
+
+            app.UseHttpsRedirection();
 
             app.UseHttpsRedirection();
 

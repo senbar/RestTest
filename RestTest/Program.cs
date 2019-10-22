@@ -14,14 +14,13 @@ namespace RestTest
     {
         public static void Main(string[] args)
         {
-            /*string portString; 
+            string portString; 
             do
             {
                 Console.WriteLine("Port: ");
                 portString = Console.ReadLine();
             } while(!Int32.TryParse(portString, out int _));
-             */
-            string portString = "5000";
+             
             CreateHostBuilder(args, portString)
                 .Build().Run();
 
