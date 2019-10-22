@@ -19,7 +19,7 @@ namespace RestTest.Infrastructure.Data.NHibernateFramework.Mapping
             m =>
             {
                 m.Table("Employee");
-                m.Cascade(Cascade.All);
+                m.Cascade(Cascade.DeleteOrphans);
                 m.Key(c => c.Column("CompanyId"));
             },
             map =>

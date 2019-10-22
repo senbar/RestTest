@@ -23,11 +23,15 @@ namespace RestTest.Api.Controllers
         private readonly ISearchCompanyUseCase _searchCompanyUseCase;
         private readonly SearchCompanyPresenter _searchCompanyPresenter;
 
+        private readonly IDeleteCompanyUseCase _deleteCompanyUseCase;
+        private readonly DeleteCompanyPresenter _deleteCompanyPresenter;
+
         private readonly IMapper _mapper;
 
         public CompaniesController(IAddCompanyUseCase addCompanyUseCase, AddCompanyPresenter addCompanyPresenter,
             IUpdateCompanyUseCase updateCompanyUseCase, UpdateCompanyPresenter updateCompanyPresenter,
             ISearchCompanyUseCase searchCompanyUseCase, SearchCompanyPresenter searchCompanyPresenter,
+            IDeleteCompanyUseCase deleteCompanyUseCase, DeleteCompanyPresenter deleteCompanyPresenter,
             IMapper mapper)
         {
             _mapper = mapper;
@@ -40,6 +44,9 @@ namespace RestTest.Api.Controllers
 
             _searchCompanyUseCase = searchCompanyUseCase;
             _searchCompanyPresenter = searchCompanyPresenter;
+
+            _deleteCompanyUseCase = deleteCompanyUseCase;
+            _deleteCompanyPresenter = deleteCompanyPresenter;
 
         }
 
@@ -69,6 +76,14 @@ namespace RestTest.Api.Controllers
             dtoRequest.Id = id;
             await _updateCompanyUseCase.Handle(dtoRequest, _updateCompanyPresenter);
             return _updateCompanyPresenter.ContentResult;
+        }
+
+        [HttpGet]
+        [Route("delete/{id}")]
+        public async Task<ActionResult> Get(int id)
+        {
+            await _deleteCompanyUseCase.Handle(new DeleteCompanyRequest(id), _deleteCompanyPresenter);
+            return _deleteCompanyPresenter.ContentResult;
         }
     }
 }

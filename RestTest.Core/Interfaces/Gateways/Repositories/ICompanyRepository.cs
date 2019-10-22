@@ -15,6 +15,8 @@ namespace RestTest.Core.Interfaces.Gateways.Repositories
 
         Task<UpdateCompanyResponse> Update(int id, Company company);
 
+        Task<DeleteCompanyResponse> Delete(int id);
+
         //TODO rest of them
     }
 }

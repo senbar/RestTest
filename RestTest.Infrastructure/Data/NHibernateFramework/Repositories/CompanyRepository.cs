@@ -125,5 +125,24 @@ namespace RestTest.Infrastructure.Data.NHibernateFramework.Repositories
 
             return new UpdateCompanyResponse(true);
         }
+
+        public async Task<DeleteCompanyResponse> Delete(int id)
+        {
+            using (var tran = _session.BeginTransaction())
+            {
+                try
+                {
+                    _session.Delete(_session.Query<CompanyEntity>().Single(c => c.Id == id));
+                }
+                catch (Exception e)
+                {
+                    tran.Rollback();
+                    return new DeleteCompanyResponse(new List<string> { e.Message }, false); 
+                }
+
+                await tran.CommitAsync();
+            }
+            return new DeleteCompanyResponse(true);
+        }
     }
 }

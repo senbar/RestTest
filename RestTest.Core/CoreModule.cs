@@ -11,6 +11,7 @@ namespace RestTest.Core
             builder.RegisterType<AddCompanyUseCase>().As<IAddCompanyUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<SearchCompanyUseCase>().As<ISearchCompanyUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<UpdateCompanyUseCase>().As<IUpdateCompanyUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<DeleteCompanyUseCase>().As<IDeleteCompanyUseCase>().InstancePerLifetimeScope();
         }
     }
 }
