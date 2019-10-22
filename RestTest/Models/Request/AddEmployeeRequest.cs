@@ -16,7 +16,7 @@ namespace RestTest.Api.Models.Request
         public string LastName { get; set; }
 
         [Required]
-        public JobTitles JobTitle { get; set; }
+        public string JobTitle { get; set; }
 
         [Required]
         public DateTime? DateOfBirth { get; set; }
