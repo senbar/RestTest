@@ -19,8 +19,8 @@ namespace RestTest.Infrastructure.Data.Mapping
 
         public DataProfiles()
         {
-            CreateMap<Core.Domain.Entities.Employee, Infrastructure.Data.Entities.Employee> ();
-            CreateMap<IList<Entities.Employee>, IList<Core.Domain.Entities.Employee>>();
+            CreateMap<Core.Domain.Entities.Employee, Infrastructure.Data.Entities.EmployeeEntity> ();
+            CreateMap<IList<Entities.EmployeeEntity>, IList<Core.Domain.Entities.Employee>>();
             //    .ForMember(dest => dest.JobTitle,
              //   opt => opt.MapFrom(src => (JobTitles)src.JobTitle));
 
@@ -28,8 +28,15 @@ namespace RestTest.Infrastructure.Data.Mapping
                // .ForMember(dest => dest.,
                 //opt => opt.MapFrom(src => (int)src.JobTitle));
                 
-            CreateMap<RestTest.Core.Domain.Entities.Company, Entities.Company>()
+            CreateMap<RestTest.Core.Domain.Entities.Company, Entities.CompanyEntity>()
                .ForMember(dest => dest.Employees, opt => opt.MapFrom(src => src.Employees));
+
+
+            CreateMap<Entities.EmployeeEntity, Core.Domain.Entities.Employee>();
+            CreateMap<IList<Entities.EmployeeEntity>, IList<Core.Domain.Entities.Employee>>();
+
+            CreateMap<Entities.CompanyEntity, Core.Domain.Entities.Company>();
+            
         }
     }
 }

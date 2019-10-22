@@ -17,12 +17,16 @@ namespace RestTest.Api.Controllers
         private readonly IAddCompanyUseCase _addCompanyUseCase;
         private readonly AddCompanyPresenter _addCompanyPresenter;
 
+        private readonly IUpdateCompanyUseCase _updateCompanyUseCase;
+        private readonly UpdateCompanyPresenter _updateCompanyPresenter;
+
         private readonly ISearchCompanyUseCase _searchCompanyUseCase;
         private readonly SearchCompanyPresenter _searchCompanyPresenter;
 
         private readonly IMapper _mapper;
 
         public CompaniesController(IAddCompanyUseCase addCompanyUseCase, AddCompanyPresenter addCompanyPresenter,
+            IUpdateCompanyUseCase updateCompanyUseCase, UpdateCompanyPresenter updateCompanyPresenter,
             ISearchCompanyUseCase searchCompanyUseCase, SearchCompanyPresenter searchCompanyPresenter,
             IMapper mapper)
         {
@@ -31,6 +35,9 @@ namespace RestTest.Api.Controllers
             _addCompanyUseCase = addCompanyUseCase;
             _addCompanyPresenter = addCompanyPresenter;
 
+            _updateCompanyUseCase = updateCompanyUseCase;
+            _updateCompanyPresenter = updateCompanyPresenter;
+
             _searchCompanyUseCase = searchCompanyUseCase;
             _searchCompanyPresenter = searchCompanyPresenter;
 
@@ -38,7 +45,7 @@ namespace RestTest.Api.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult> Post([FromBody] Models.Request.AddCompanyRequest addCompanyRequest)
+        public async Task<ActionResult> Post([FromBody] Models.Request.AddUpdateCompanyRequest addCompanyRequest)
         {
             var dtoRequest = _mapper.Map<Core.Dto.UseCaseRequests.AddCompanyRequest>(addCompanyRequest);
             await _addCompanyUseCase.Handle(dtoRequest, _addCompanyPresenter);
@@ -52,6 +59,16 @@ namespace RestTest.Api.Controllers
             var dtoRequest = _mapper.Map<Core.Dto.UseCaseRequests.SearchCompanyRequest>(searchCompanyRequest);
             await _searchCompanyUseCase.Handle(dtoRequest, _searchCompanyPresenter);
             return _searchCompanyPresenter.ContentResult;
+        }
+
+        [HttpPost]
+        [Route("update/{id}")]
+        public async Task<ActionResult> Post(int id, [FromBody] Models.Request.AddUpdateCompanyRequest updateCompanyRequest)
+        {
+            var dtoRequest = _mapper.Map<Core.Dto.UseCaseRequests.UpdateCompanyRequest>(updateCompanyRequest);
+            dtoRequest.Id = id;
+            await _updateCompanyUseCase.Handle(dtoRequest, _updateCompanyPresenter);
+            return _updateCompanyPresenter.ContentResult;
         }
     }
 }

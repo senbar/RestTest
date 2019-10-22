@@ -7,7 +7,7 @@ using NHibernate.Mapping.ByCode;
 
 namespace RestTest.Infrastructure.Data.NHibernateFramework.Mapping
 {
-    public class CompanyMap : ClassMapping<Data.Entities.Company>
+    public class CompanyMap : ClassMapping<Data.Entities.CompanyEntity>
     {
         public CompanyMap()
         {
@@ -19,13 +19,12 @@ namespace RestTest.Infrastructure.Data.NHibernateFramework.Mapping
             m =>
             {
                 m.Table("Employee");
-                m.Inverse(true);
                 m.Cascade(Cascade.All);
                 m.Key(c => c.Column("CompanyId"));
             },
             map =>
             {
-                map.OneToMany(p => p.Class(typeof(Data.Entities.Employee)));
+                map.OneToMany(p => p.Class(typeof(Data.Entities.EmployeeEntity)));
            });
             
         }

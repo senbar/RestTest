@@ -7,10 +7,9 @@ using RestTest.Core.Domain.Enums;
 
 namespace RestTest.Infrastructure.Data.Entities
 {
-    public class Employee
+    public class EmployeeEntity
     {
-        public virtual int Id { get; set; }
-        public virtual Company Company { get; set; }
+        public virtual int? Id { get; set; }
         public virtual int CompanyId { get; set; }
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }

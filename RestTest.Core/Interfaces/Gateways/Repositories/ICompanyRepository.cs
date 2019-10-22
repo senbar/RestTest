@@ -13,6 +13,8 @@ namespace RestTest.Core.Interfaces.Gateways.Repositories
         Task<AddCompanyResponse> Create(Company company);
         Task<SearchCompanyResponse> Search(SearchCompanyRequest searchRequest);
 
+        Task<UpdateCompanyResponse> Update(int id, Company company);
+
         //TODO rest of them
     }
 }

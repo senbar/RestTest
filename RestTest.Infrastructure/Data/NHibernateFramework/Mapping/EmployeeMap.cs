@@ -1,4 +1,5 @@
-﻿using NHibernate.Mapping.ByCode.Conformist;
+﻿using NHibernate.Mapping.ByCode;
+using NHibernate.Mapping.ByCode.Conformist;
 using RestTest.Infrastructure.Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,19 +7,13 @@ using System.Text;
 
 namespace RestTest.Infrastructure.Data.NHibernateFramework.Mapping
 {
-    public class EmployeeMap : ClassMapping<Data.Entities.Employee>
+    public class EmployeeMap : ClassMapping<Data.Entities.EmployeeEntity>
     {
         public EmployeeMap()
         {
             Table("Employee");
 
-            Id(x => x.Id);
-            ManyToOne(x => x.Company, map =>
-             {
-                 map.Column("CompanyId");
-                 map.Class(typeof(Company));
-                 map.Cascade(NHibernate.Mapping.ByCode.Cascade.All);
-             });
+            Id(x => x.Id, map=> map.Generator(Generators.Identity));
             
             Property(c => c.FirstName);
             

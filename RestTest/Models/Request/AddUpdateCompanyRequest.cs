@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RestTest.Api.Models.Request
 {
-    public class AddCompanyRequest
+    public class AddUpdateCompanyRequest
     {
         [Required]
         public string CompanyName { get; set; }

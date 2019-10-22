@@ -13,8 +13,12 @@ namespace RestTest.Api.Models.Mapping
         public RequestsProfile()
         {
             CreateMap<Request.AddEmployeeRequest, Employee>();
-            CreateMap<IList<Request.AddCompanyRequest>, IList<Employee>>();
-            CreateMap<Request.AddCompanyRequest, AddCompanyRequest>()
+            CreateMap<IList<Request.AddUpdateCompanyRequest>, IList<Employee>>();
+
+            CreateMap<Request.AddUpdateCompanyRequest, AddCompanyRequest>()
+            .ForMember(dest => dest.Employees, opt => opt.MapFrom(src => src.EmployeesRequest));
+
+            CreateMap<Request.AddUpdateCompanyRequest, UpdateCompanyRequest>()
             .ForMember(dest => dest.Employees, opt => opt.MapFrom(src => src.EmployeesRequest));
 
             CreateMap<Request.SearchCompanyRequest, RestTest.Core.Dto.UseCaseRequests.SearchCompanyRequest>();
