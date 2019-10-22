@@ -7,6 +7,7 @@ using RestTest.Core.Interfaces.UseCases;
 using Microsoft.AspNetCore.Mvc;
 using RestTest.Core.Dto.UseCaseRequests;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RestTest.Api.Controllers
 {
@@ -50,6 +51,9 @@ namespace RestTest.Api.Controllers
 
         }
 
+#if !DEBUG
+        [Authorize]
+#endif
         [HttpPost]
         [Route("create")]
         public async Task<ActionResult> Post([FromBody] Models.Request.AddUpdateCompanyRequest addCompanyRequest)
@@ -68,6 +72,9 @@ namespace RestTest.Api.Controllers
             return _searchCompanyPresenter.ContentResult;
         }
 
+#if !DEBUG
+        [Authorize]
+#endif
         [HttpPost]
         [Route("update/{id}")]
         public async Task<ActionResult> Post(int id, [FromBody] Models.Request.AddUpdateCompanyRequest updateCompanyRequest)
@@ -78,6 +85,9 @@ namespace RestTest.Api.Controllers
             return _updateCompanyPresenter.ContentResult;
         }
 
+#if !DEBUG
+        [Authorize]
+#endif
         [HttpGet]
         [Route("delete/{id}")]
         public async Task<ActionResult> Get(int id)

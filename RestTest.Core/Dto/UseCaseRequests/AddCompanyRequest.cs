@@ -19,5 +19,9 @@ namespace RestTest.Core.Dto.UseCaseRequests
             YearEstablished = yearEstablished;
             Employees = employees;
         }
+        public AddCompanyRequest()
+        {
+
+        }
     }
 }

@@ -18,6 +18,10 @@ using Autofac;
 using System.Reflection;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using ZNetCS.AspNetCore.Authentication.Basic;
+using ZNetCS.AspNetCore.Authentication.Basic.Events;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace RestTest
 {
@@ -27,12 +31,44 @@ namespace RestTest
         {
             Configuration = configuration;
         }
-
+        
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //basic auth config
+            services
+        .AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
+        .AddBasicAuthentication(
+            options =>
+            {
+                options.Realm = "RestTest";
+                options.Events = new BasicAuthenticationEvents
+                {
+                    OnValidatePrincipal = context =>
+                    {
+                        if ((context.UserName == "user") && (context.Password == "password"))
+                        {
+                            var claims = new List<Claim>
+                            {
+                                new Claim(ClaimTypes.Name, context.UserName, context.Options.ClaimsIssuer)
+                            };
+
+                            var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, context.Scheme.Name));
+                            context.Principal = principal;
+                        }
+                        else
+                        {
+                            context.AuthenticationFailMessage = "Authentication failed."; 
+                        }
+
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+
+
             //mapper config
             var mapperConfig = new MapperConfiguration(mc =>
              {
@@ -45,7 +81,7 @@ namespace RestTest
             //swagger config
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new  OpenApiInfo { Title = "RestTestApi" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RestTestApi" });
             });
 
             services.AddControllers();
@@ -67,12 +103,14 @@ namespace RestTest
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

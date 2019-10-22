@@ -14,15 +14,25 @@ namespace RestTest
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            string portString; 
+            do
+            {
+                Console.WriteLine("Port: ");
+                portString = Console.ReadLine();
+            } while(!Int32.TryParse(portString, out int _));
+                
+            CreateHostBuilder(args, portString)
+                .Build().Run();
+
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        public static IHostBuilder CreateHostBuilder(string[] args, string port) =>
             Host.CreateDefaultBuilder(args)
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                    .UseUrls(urls: "https://localhost:" + port);
                 });
     }
 }
