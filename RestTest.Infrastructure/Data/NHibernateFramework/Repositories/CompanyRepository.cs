@@ -38,29 +38,29 @@ namespace RestTest.Infrastructure.Data.NHibernateFramework.Repositories
             return (new AddCompanyResponse(companyEntity.Id, true));
         }
 
-        private IQueryable<CompanyEntity> searchByKeyword(string keyword)
+        public  IQueryable<CompanyEntity> searchByKeyword(IQueryable<CompanyEntity> query, string keyword)
         {
-                return _session.Query<Infrastructure.Data.Entities.CompanyEntity>().Where(x => 
+                return query.Where(x => 
                 x.Employees.Any(
                 e => e.FirstName.Contains(keyword)
                     || e.LastName.Contains(keyword)) 
                     || x.CompanyName.Contains(keyword));
         }
-        private IQueryable<CompanyEntity> searchByBirthdayRange(DateTime from, DateTime to)
+        public IQueryable<CompanyEntity> searchByBirthdayRange(IQueryable<CompanyEntity> query, DateTime from, DateTime to)
         {
-                return _session.Query<Entities.CompanyEntity>().Where(x =>
+                return query.Where(x =>
                  x.Employees.Any(
                  e => e.DateOfBirth.Date > from.Date
                     && e.DateOfBirth.Date < to.Date));
 
         }
-        private IQueryable<CompanyEntity> searchByTitles(ISet<JobTitles> titles)
+        private IQueryable<CompanyEntity> searchByTitles(IQueryable<CompanyEntity> query, ISet<JobTitles> titles)
         {
-                return _session.Query<Entities.CompanyEntity>().Where(x =>
+                return query.Where(x =>
                 x.Employees.Any(e => titles.Contains((JobTitles)e.JobTitle)));
         } 
 
-
+        
         public async Task<SearchCompanyResponse> Search(SearchCompanyRequest searchRequest)
         {
             List<Entities.CompanyEntity> QueryResult;
@@ -68,17 +68,18 @@ namespace RestTest.Infrastructure.Data.NHibernateFramework.Repositories
 
             using (var tran = _session.BeginTransaction())
             {
-                IQueryable<CompanyEntity> result = _session.Query<CompanyEntity>();
+                IQueryable<CompanyEntity> result= _session.Query<CompanyEntity>();
 
+                //note: i intepreted given task as a result must meet ALL given criteria not ANY of them so here's solution for that logic
                 if(searchRequest.Keyword!=null)
-                    result.Concat(searchByKeyword(searchRequest.Keyword));
+                    result = searchByKeyword(result, searchRequest.Keyword);
 
                 if(searchRequest.EmployeeDateOfBirthFrom != null && searchRequest.EmployeeDateOfBirthTo != null)
-                     result.Concat(searchByBirthdayRange(searchRequest.EmployeeDateOfBirthFrom.GetValueOrDefault(),
-                                                                 searchRequest.EmployeeDateOfBirthTo.GetValueOrDefault()));
+                    result = searchByBirthdayRange(result, searchRequest.EmployeeDateOfBirthFrom.GetValueOrDefault(),
+                                                         searchRequest.EmployeeDateOfBirthTo.GetValueOrDefault());
                 if (searchRequest.EmployeeJobTitles != null || searchRequest.EmployeeJobTitles.Count != 0)
-                     result.Concat(searchByTitles(searchRequest.EmployeeJobTitles));
-
+                     result = searchByTitles(result, searchRequest.EmployeeJobTitles);
+                     
 
                 QueryResult = await result.ToListAsync();
                 
