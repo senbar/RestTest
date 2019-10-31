@@ -75,7 +75,7 @@ namespace RestTest.Api.Controllers
 #if !DEBUG
         [Authorize]
 #endif
-        [HttpPost]
+        [HttpPut]
         [Route("update/{id}")]
         public async Task<ActionResult> Post(int id, [FromBody] Models.Request.AddUpdateCompanyRequest updateCompanyRequest)
         {
@@ -88,7 +88,7 @@ namespace RestTest.Api.Controllers
 #if !DEBUG
         [Authorize]
 #endif
-        [HttpGet]
+        [HttpDelete]
         [Route("delete/{id}")]
         public async Task<ActionResult> Get(int id)
         {
